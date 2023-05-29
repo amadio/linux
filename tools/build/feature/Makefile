@@ -343,7 +343,7 @@ $(OUTPUT)test-llvm.bin:
 	$(BUILDXX) -std=gnu++14 				\
 		-I$(shell $(LLVM_CONFIG) --includedir) 		\
 		-L$(shell $(LLVM_CONFIG) --libdir)		\
-		$(shell $(LLVM_CONFIG) --libs Core BPF)		\
+		$(shell $(LLVM_CONFIG) --libs)			\
 		$(shell $(LLVM_CONFIG) --system-libs)		\
 		> $(@:.bin=.make.output) 2>&1
 
@@ -356,10 +356,7 @@ $(OUTPUT)test-clang.bin:
 	$(BUILDXX) -std=gnu++14					\
 		-I$(shell $(LLVM_CONFIG) --includedir) 		\
 		-L$(shell $(LLVM_CONFIG) --libdir)		\
-		-Wl,--start-group -lclangBasic -lclangDriver	\
-		  -lclangFrontend -lclangEdit -lclangLex	\
-		  -lclangAST -Wl,--end-group 			\
-		$(shell $(LLVM_CONFIG) --libs Core option)	\
+		-lclang-cpp $(shell $(LLVM_CONFIG) --libs)	\
 		$(shell $(LLVM_CONFIG) --system-libs)		\
 		> $(@:.bin=.make.output) 2>&1
 
